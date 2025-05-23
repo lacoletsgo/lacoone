@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>일일 체크리스트</title>
+  <style>
+    body { font-family: sans-serif; max-width: 700px; margin: 2rem auto; padding: 1rem; }
+    h2 { margin-top: 2rem; }
+    label { display: flex; align-items: center; gap: 0.5rem; margin: 0.2rem 0; }
+    input[type="text"] { width: 100px; }
+  </style>
+</head>
+<body>
+  <h1>일일 체크리스트</h1>
+
+  <div>
+    <label>본캐 이름: <input type="text" id="char-0" /></label>
+    <label><input type="checkbox" id="daily-0" /> 일일 도전</label>
+    <label><input type="checkbox" id="black-hole" /> 검은 구멍</label>
+    <label><input type="checkbox" id="barrier" /> 결계</label>
+    <label><input type="checkbox" id="cash-reroll" /> 캐시샵 무료 리롤 (공용)</label>
+    <label><input type="checkbox" id="daily-dungeon" /> 요일 던전 (<span id="day-info"></span>)</label>
+  </div>
+
+  <h2>주간</h2>
+  <label><input type="checkbox" id="membership" /> 멤버쉽 아르바이트</label>
+  <label><input type="checkbox" id="fb-peri" /> 필드보스: 페리</label>
+  <label><input type="checkbox" id="fb-krab" /> 필드보스: 크라브바흐</label>
+  <label><input type="checkbox" id="fb-krama" /> 필드보스: 크라마</label>
+  <label><input type="checkbox" id="shared-items" /> 증표/파편/촉매 (공용)</label>
+  <label><input type="checkbox" id="abyss" /> 어비스 유적</label>
+  <label><input type="checkbox" id="altar" /> 제단</label>
+  <label><input type="checkbox" id="hall" /> 전당</label>
+  <label>
+    <input type="radio" name="raid" value="glass" /> 글라스기브넨 (입문)
+  </label>
+  <label>
+    <input type="radio" name="raid" value="hell" /> 지옥
+  </label>
+
+  <script>
+    const ids = [
+      "char-0", "daily-0", "black-hole", "barrier", "cash-reroll", "daily-dungeon",
+      "membership", "fb-peri", "fb-krab", "fb-krama", "shared-items",
+      "abyss", "altar", "hall"
+    ];
+    const radioName = "raid";
+
+    const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
+    const dungeonMap = {
+      0: "원하는 던전",
+      1: "골드",
+      2: "보석",
+      3: "촉매",
+      4: "골드",
+      5: "보석",
+      6: "촉매"
+    };
+    document.getElementById("day-info").textContent = `${dayNames[new Date().getDay()]}요일: ${dungeonMap[new Date().getDay()]}`;
+
+    function save() {
+      const data = {};
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        data[id] = el.type === "checkbox" ? el.checked : el.value;
+      });
+      const radios = document.getElementsByName(radioName);
+      radios.forEach(r => {
+        if (r.checked) data["raid"] = r.value;
+      });
+      localStorage.setItem("checklist-data", JSON.stringify(data));
+    }
+
+    function load() {
+      const data = JSON.parse(localStorage.getItem("checklist-data") || "{}");
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          if (el.type === "checkbox") el.checked = data[id] || false;
+          else el.value = data[id] || "";
+        }
+      });
+      const radios = document.getElementsByName(radioName);
+      radios.forEach(r => {
+        r.checked = data["raid"] === r.value;
+      });
+    }
+
+    function shouldResetDaily() {
+      const last = localStorage.getItem("last-reset");
+      const now = new Date();
+      const sixAM = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 6);
+      const lastDate = last ? new Date(last) : null;
+      return !last || (lastDate < sixAM && now > sixAM);
+    }
+
+    if (shouldResetDaily()) {
+      ids.filter(id => document.getElementById(id).type === "checkbox").forEach(id => {
+        document.getElementById(id).checked = false;
+      });
+      document.getElementsByName(radioName).forEach(r => r.checked = false);
+      localStorage.setItem("last-reset", new Date().toISOString());
+    }
+
+    load();
+    document.querySelectorAll("input").forEach(input => input.addEventListener("change", save));
+  </script>
+</body>
+</html>
