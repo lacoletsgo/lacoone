@@ -8,21 +8,15 @@
 </head>
 <body class="bg-gray-100 text-gray-800 p-6">
   <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow">
-    <h1 class="text-2xl font-bold mb-4">체크리스트</h1>
-    <div class="flex space-x-4 mb-6">
-      <input type="text" id="name-0" placeholder="본캐" class="flex-1 border rounded px-3 py-2"/>
-      <input type="text" id="name-1" placeholder="부캐1" class="flex-1 border rounded px-3 py-2"/>
-      <input type="text" id="name-2" placeholder="부캐2" class="flex-1 border rounded px-3 py-2"/>
-      <input type="text" id="name-3" placeholder="부캐3" class="flex-1 border rounded px-3 py-2"/>
-    </div>
-    <table class="min-w-full table-auto border-collapse">
+    <h1 class="text-2xl font-bold mb-4 text-center">체크리스트</h1>
+    <table class="w-full table-auto border-collapse">
       <thead>
         <tr class="bg-gray-200">
-          <th class="border px-4 py-2">항목</th>
-          <th class="border px-4 py-2" id="th-0"></th>
-          <th class="border px-4 py-2" id="th-1"></th>
-          <th class="border px-4 py-2" id="th-2"></th>
-          <th class="border px-4 py-2" id="th-3"></th>
+          <th class="border px-4 py-2 text-center">항목</th>
+          <th class="border px-4 py-2 text-center"><input type="text" id="name-0" placeholder="본캐" class="w-full text-center"/></th>
+          <th class="border px-4 py-2 text-center"><input type="text" id="name-1" placeholder="부캐1" class="w-full text-center"/></th>
+          <th class="border px-4 py-2 text-center"><input type="text" id="name-2" placeholder="부캐2" class="w-full text-center"/></th>
+          <th class="border px-4 py-2 text-center"><input type="text" id="name-3" placeholder="부캐3" class="w-full text-center"/></th>
         </tr>
       </thead>
       <tbody>
@@ -39,8 +33,7 @@
           <td class="border px-4 py-2" colspan="5">
             <div class="flex items-center">
               <input type="checkbox" id="cashshop" class="mr-2"/>
-              캐시샵 무료 리롤 (공유)
-            </div>
+              캐시샵 무료 리롤 (전체)</n            </div>
           </td>
         </tr>
         <tr>
@@ -92,11 +85,11 @@
         </tr>
         <!-- Raid radio -->
         <tr>
-          <td class="border px-4 py-2">레이드 (택1)</td>
+          <td class="border px-4 py-2">글라리 레이드</td>
           <td colspan="4" class="border px-4 py-2">
             <div class="flex gap-4">
-              <label><input type="radio" name="raid" value="glass" class="mr-1"/> 글라스기브넨 입문</label>
-              <label><input type="radio" name="raid" value="hell" class="mr-1"/> 글라스기브넨 지옥</label>
+              <label><input type="radio" name="raid" value="입문" class="mr-1"/> 입문</label>
+              <label><input type="radio" name="raid" value="지옥" class="mr-1"/> 지옥</label>
             </div>
           </td>
         </tr>
@@ -105,83 +98,66 @@
   </div>
 
   <script>
-    // Character name inputs and table headers
+    // Character name inputs
     const nameIds = ["name-0","name-1","name-2","name-3"];
-    const thIds = ["th-0","th-1","th-2","th-3"];
     const defaultNames = ["본캐","부캐1","부캐2","부캐3"];
-    // Task IDs
-    const dailyIds = ["daily-0","daily-1","daily-2","daily-3","cashshop","blackhole","barrier","dayDungeon"];
-    const weeklyIds = ["membership","peri","krav","krama","sharedItems","abyss","altar","hall"];
-    const allIds = [...dailyIds,...weeklyIds];
-
-    // Load saved names
     let names = JSON.parse(localStorage.getItem("names")||"[]");
     if(names.length!==4) names = [...defaultNames];
-    // Apply names to inputs and headers
+    // Apply saved names
     nameIds.forEach((id,i)=>{
-      const input=document.getElementById(id);
-      input.value=names[i];
-      document.getElementById(thIds[i]).innerText=names[i];
+      const input = document.getElementById(id);
+      input.value = names[i];
       input.addEventListener("input",()=>{
-        names[i]=input.value||defaultNames[i];
-        document.getElementById(thIds[i]).innerText=names[i];
-        localStorage.setItem("names",JSON.stringify(names));
+        names[i] = input.value || defaultNames[i];
+        localStorage.setItem("names", JSON.stringify(names));
       });
     });
 
     // Dungeon day info
     const dayNames=["일","월","화","수","목","금","토"];
     const dungeonMap={0:"원하는 던전",1:"골드",2:"보석",3:"촉매",4:"골드",5:"보석",6:"촉매"};
-    document.getElementById("dayInfo").innerText=`${dayNames[new Date().getDay()]}요일: ${dungeonMap[new Date().getDay()]}`;
+    document.getElementById("dayInfo").innerText = `${dayNames[new Date().getDay()]}요일: ${dungeonMap[new Date().getDay()]}`;
 
-    // Load or initialize checklist data
+    // Task IDs
+    const dailyIds = ["daily-0","daily-1","daily-2","daily-3","cashshop","blackhole","barrier","dayDungeon"];
+    const weeklyIds = ["membership","peri","krav","krama","sharedItems","abyss","altar","hall"];
+    const allIds = [...dailyIds, ...weeklyIds];
+
     let data = JSON.parse(localStorage.getItem("checklist")||"{}");
-    const now=new Date();
+    const now = new Date();
     // Reset daily at 6:00
-    const dailyPoint=new Date(now.getFullYear(), now.getMonth(), now.getDate(),6);
-    const lastDailyReset=localStorage.getItem("lastDailyReset");
-    if(!lastDailyReset|| new Date(lastDailyReset) < dailyPoint && now>=dailyPoint){
+    const dailyPoint = new Date(now.getFullYear(), now.getMonth(), now.getDate(),6);
+    const lastDaily = localStorage.getItem("lastDaily");
+    if(!lastDaily || (new Date(lastDaily) < dailyPoint && now >= dailyPoint)){
       dailyIds.forEach(id=>data[id]=false);
-      localStorage.setItem("lastDailyReset", now.toISOString());
+      localStorage.setItem("lastDaily", now.toISOString());
     }
-    // Reset weekly on Monday 6:00
-    const weekDay = now.getDay(), //0 sunday
-          diff=(weekDay+6)%7,
-          mon=new Date(now);
-    mon.setDate(now.getDate()-diff);
-    const weeklyPoint=new Date(mon.getFullYear(), mon.getMonth(), mon.getDate(),6);
-    const lastWeeklyReset=localStorage.getItem("lastWeeklyReset");
-    if(!lastWeeklyReset|| new Date(lastWeeklyReset) < weeklyPoint && now>=weeklyPoint){
+    // Reset weekly Monday 6:00
+    const weekDay = now.getDay(), diff=(weekDay+6)%7;
+    const mon=new Date(now); mon.setDate(now.getDate()-diff);
+    const weeklyPoint = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate(),6);
+    const lastWeekly = localStorage.getItem("lastWeekly");
+    if(!lastWeekly || (new Date(lastWeekly) < weeklyPoint && now>=weeklyPoint)){
       weeklyIds.forEach(id=>data[id]=false);
-      data["raid"]=null;
-      localStorage.setItem("lastWeeklyReset", now.toISOString());
+      data["raid"] = null;
+      localStorage.setItem("lastWeekly", now.toISOString());
     }
 
     // Apply saved values
     allIds.forEach(id=>{
-      const el=document.getElementById(id);
-      if(el) el.checked=!!data[id];
+      const el = document.getElementById(id);
+      if(el) el.checked = !!data[id];
     });
     document.getElementsByName("raid").forEach(r=>{ r.checked = data["raid"]===r.value; });
 
     // Save on change
-    const saveData=()=>{
-      localStorage.setItem("checklist",JSON.stringify(data));
-    };
+    const save = ()=> localStorage.setItem("checklist", JSON.stringify(data));
     allIds.forEach(id=>{
-      const el=document.getElementById(id);
-      if(el){
-        el.addEventListener("change",()=>{
-          data[id]=el.checked;
-          saveData();
-        });
-      }
+      const el = document.getElementById(id);
+      if(el) el.addEventListener("change",()=>{ data[id] = el.checked; save(); });
     });
     document.getElementsByName("raid").forEach(r=>{
-      r.addEventListener("change",()=>{
-        data["raid"]=r.value;
-        saveData();
-      });
+      r.addEventListener("change",()=>{ data["raid"] = r.value; save(); });
     });
   </script>
 </body>
