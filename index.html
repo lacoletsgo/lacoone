@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <title>모비노기 체크리스트</title>
   <style>
     @import url('https://cdn.jsdelivr.net/npm/pretendard@1.3.6/dist/web/variable/pretendardvariable.css');
+
     :root {
       --accent: #4a90e2;
       --size: 20px;
@@ -58,16 +59,13 @@
       font-size: 1rem; font-weight: 500;
       text-align: center;
     }
-    .subsection.daily h3 { color: #d35400; }
+    .subsection.daily h3  { color: #d35400; }
     .subsection.weekly h3 { color: #2980b9; }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      table-layout: fixed;
     }
-    table colgroup col:nth-child(1) { width: 40%; }
-    table colgroup col:nth-child(n+2) { width: 20%; }
     tr:nth-child(even) { background: rgba(0,0,0,0.02); }
     td, th {
       padding: 12px 10px;
@@ -78,19 +76,32 @@
     td:first-child {
       font-weight: bold;
       padding-left: 20px;
-      text-align: left;
+      width: 30%;
     }
-    /* 체크박스 + 텍스트 수평·수직 중앙, 왼쪽 정렬 */
-    td:not(:first-child),
-    th {
+    td:last-child {
+      width: 70%;
+    }
+
+    /* 체크박스를 가로로 나열 */
+    .checkbox-group {
       display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
       align-items: center;
-      justify-content: flex-start;
+    }
+    .checkbox-group label {
+      display: inline-flex;
+      align-items: center;
       gap: 4px;
+      cursor: pointer;
+      user-select: none;
+      font-size: 0.95rem;
+      color: var(--text);
     }
 
     .checkbox {
-      width: var(--size); height: var(--size);
+      width: var(--size);
+      height: var(--size);
       border: 2px solid var(--border);
       border-radius: 4px;
       background: #fff;
@@ -106,7 +117,8 @@
     }
     .checkbox.checked::after {
       content: '✔';
-      position: absolute; top:50%; left:50%;
+      position: absolute;
+      top: 50%; left: 50%;
       transform: translate(-50%,-50%);
       font-size: 14px; color: #fff;
     }
@@ -119,95 +131,122 @@
   <div class="section main" id="main">
     <h2>본</h2>
     <div class="section-content">
+      <!-- 일일도전 -->
       <div class="subsection daily">
         <h3>일일도전</h3>
         <table>
-          <colgroup><col/><col/><col/><col/></colgroup>
           <tr>
             <td>무료 패션 리롤</td>
-            <td><span class="checkbox" id="main_freeFashion" data-frequency="daily" data-group="freeFashion"></span></td>
-            <td></td><td></td>
+            <td>
+              <div class="checkbox-group">
+                <label><span class="checkbox" id="main_freeFashion" data-frequency="daily" data-group="freeFashion"></span>체크</label>
+              </div>
+            </td>
           </tr>
           <tr>
             <td>검은 구멍</td>
-            <td><span class="checkbox" id="main_blackHole_1" data-frequency="daily"></span></td>
-            <td><span class="checkbox" id="main_blackHole_2" data-frequency="daily"></span></td>
-            <td><span class="checkbox" id="main_blackHole_3" data-frequency="daily"></span></td>
+            <td>
+              <div class="checkbox-group">
+                <label><span class="checkbox" id="main_blackHole_1" data-frequency="daily"></span>1</label>
+                <label><span class="checkbox" id="main_blackHole_2" data-frequency="daily"></span>2</label>
+                <label><span class="checkbox" id="main_blackHole_3" data-frequency="daily"></span>3</label>
+              </div>
+            </td>
           </tr>
           <tr>
             <td>결계</td>
-            <td><span class="checkbox" id="main_barrier_1" data-frequency="daily"></span></td>
-            <td><span class="checkbox" id="main_barrier_2" data-frequency="daily"></span></td>
-            <td></td>
+            <td>
+              <div class="checkbox-group">
+                <label><span class="checkbox" id="main_barrier_1" data-frequency="daily"></span>A</label>
+                <label><span class="checkbox" id="main_barrier_2" data-frequency="daily"></span>B</label>
+              </div>
+            </td>
           </tr>
           <tr>
             <td>요일 던전</td>
-            <td><span class="checkbox" id="main_dayDungeon_1" data-frequency="daily"></span></td>
-            <td></td><td></td>
+            <td>
+              <div class="checkbox-group">
+                <label><span class="checkbox" id="main_dayDungeon_1" data-frequency="daily"></span>입장</label>
+              </div>
+            </td>
           </tr>
         </table>
       </div>
 
+      <!-- 주간도전 -->
       <div class="subsection weekly">
         <h3>주간도전</h3>
         <table>
-          <colgroup><col/><col/><col/><col/></colgroup>
           <tr>
             <td>멤버쉽 골드알바</td>
-            <td><span class="checkbox" id="main_goldAlba" data-frequency="weekly"></span></td>
-            <td></td><td></td>
+            <td>
+              <div class="checkbox-group">
+                <label><span class="checkbox" id="main_goldAlba" data-frequency="weekly"></span>완료</label>
+              </div>
+            </td>
           </tr>
           <tr>
             <td>필보</td>
-            <td><span class="checkbox" id="main_filbo_ferry" data-frequency="weekly"></span>페리</td>
-            <td><span class="checkbox" id="main_filbo_kravbakh" data-frequency="weekly"></span>크라브바흐</td>
-            <td><span class="checkbox" id="main_filbo_krama" data-frequency="weekly"></span>크라마</td>
+            <td>
+              <div class="checkbox-group">
+                <label><span class="checkbox" id="main_filbo_ferry" data-frequency="weekly"></span>페리</label>
+                <label><span class="checkbox" id="main_filbo_kravbakh" data-frequency="weekly"></span>크라브바흐</label>
+                <label><span class="checkbox" id="main_filbo_krama" data-frequency="weekly"></span>크라마</label>
+              </div>
+            </td>
           </tr>
           <tr>
             <td>마물퇴치징표</td>
-            <td><span class="checkbox" id="main_monsterRune" data-frequency="weekly" data-group="monsterRune"></span>룬의 파편</td>
-            <td><span class="checkbox" id="main_monsterCatalyst" data-frequency="weekly" data-group="monsterCatalyst"></span>강화 재연소 촉매</td>
-            <td></td>
+            <td>
+              <div class="checkbox-group">
+                <label><span class="checkbox" id="main_monsterRune" data-frequency="weekly" data-group="monsterRune"></span>룬의 파편</label>
+                <label><span class="checkbox" id="main_monsterCatalyst" data-frequency="weekly" data-group="monsterCatalyst"></span>강화 재연소 촉매</label>
+              </div>
+            </td>
           </tr>
           <tr>
             <td>어비스</td>
-            <td><span class="checkbox" id="main_abyss_relic" data-frequency="weekly"></span>유적</td>
-            <td><span class="checkbox" id="main_abyss_altar" data-frequency="weekly"></span>제단</td>
-            <td><span class="checkbox" id="main_abyss_hall" data-frequency="weekly"></span>전당</td>
+            <td>
+              <div class="checkbox-group">
+                <label><span class="checkbox" id="main_abyss_relic" data-frequency="weekly"></span>유적</label>
+                <label><span class="checkbox" id="main_abyss_altar" data-frequency="weekly"></span>제단</label>
+                <label><span class="checkbox" id="main_abyss_hall" data-frequency="weekly"></span>전당</label>
+              </div>
+            </td>
           </tr>
           <tr>
             <td>레이드</td>
-            <td><span class="checkbox" id="main_raid_beginner" data-frequency="weekly"></span>입문</td>
-            <td><span class="checkbox" id="main_raid_hell" data-frequency="weekly"></span>지옥</td>
-            <td></td>
+            <td>
+              <div class="checkbox-group">
+                <label><span class="checkbox" id="main_raid_beginner" data-frequency="weekly"></span>입문</label>
+                <label><span class="checkbox" id="main_raid_hell" data-frequency="weekly"></span>지옥</label>
+              </div>
+            </td>
           </tr>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- 부1 섹션 (초기 접힘) -->
+  <!-- 부1 섹션 -->
   <div class="section alt1" id="alt1">
     <h2>부 1 <button class="toggle-btn">▶</button></h2>
     <div class="section-content collapsed">
-      <!-- ### 이하 본과 동일한 daily/weekly 테이블 반복 ### -->
-      <!-- ... -->
+      <!-- 일일/주간 동일 구조 반복 -->
     </div>
   </div>
-
-  <!-- 부2 섹션 (초기 접힘) -->
+  <!-- 부2 섹션 -->
   <div class="section alt2" id="alt2">
     <h2>부 2 <button class="toggle-btn">▶</button></h2>
     <div class="section-content collapsed">
-      <!-- ... -->
+      <!-- 반복 -->
     </div>
   </div>
-
-  <!-- 부3 섹션 (초기 접힘) -->
+  <!-- 부3 섹션 -->
   <div class="section alt3" id="alt3">
     <h2>부 3 <button class="toggle-btn">▶</button></h2>
     <div class="section-content collapsed">
-      <!-- ... -->
+      <!-- 반복 -->
     </div>
   </div>
 
@@ -223,41 +262,41 @@
             today = getDailyDate();
       if (last !== today) {
         document.querySelectorAll('.checkbox[data-frequency="daily"]')
-          .forEach(cb=>{ localStorage.removeItem(cb.id); cb.classList.remove('checked'); });
+          .forEach(cb => { cb.classList.remove('checked'); localStorage.removeItem(cb.id); });
         localStorage.setItem('lastDailyReset', today);
       }
     }
 
     // 주간 초기화 (매주 월요일 06:00 KST)
     function getWeeklyTimestamp() {
-      const now = new Date();
-      const dow = now.getDay(); // 일:0, 월:1
-      const diff = (dow === 0 ? -6 : 1 - dow);
-      const mon6 = new Date(now);
+      const now = new Date(),
+            dow = now.getDay(),
+            diff = (dow === 0 ? -6 : 1 - dow),
+            mon6 = new Date(now);
       mon6.setDate(now.getDate() + diff);
       mon6.setHours(6,0,0,0);
       return mon6.getTime();
     }
     function resetWeekly() {
-      const last = +localStorage.getItem('lastWeeklyReset') || 0;
-      const thisMon = getWeeklyTimestamp();
+      const last = +localStorage.getItem('lastWeeklyReset') || 0,
+            thisMon = getWeeklyTimestamp();
       if (Date.now() >= thisMon && last < thisMon) {
         document.querySelectorAll('.checkbox[data-frequency="weekly"]')
-          .forEach(cb=>{ localStorage.removeItem(cb.id); cb.classList.remove('checked'); });
+          .forEach(cb => { cb.classList.remove('checked'); localStorage.removeItem(cb.id); });
         localStorage.setItem('lastWeeklyReset', thisMon);
       }
     }
 
-    // 체크 복원 & 클릭 바인딩
+    // 복원 & 바인딩
     function restoreAndBind() {
-      document.querySelectorAll('.checkbox').forEach(cb=>{
+      document.querySelectorAll('.checkbox').forEach(cb => {
         if (localStorage.getItem(cb.id) === 'true') cb.classList.add('checked');
-        cb.addEventListener('click', ()=>{
+        cb.addEventListener('click', () => {
           const g = cb.dataset.group;
           if (g) {
-            const newState = !cb.classList.contains('checked');
+            const st = !cb.classList.contains('checked');
             document.querySelectorAll(`.checkbox[data-group="${g}"]`)
-              .forEach(o=>{ o.classList.toggle('checked', newState); localStorage.setItem(o.id, newState); });
+              .forEach(o => { o.classList.toggle('checked', st); localStorage.setItem(o.id, st); });
           } else {
             cb.classList.toggle('checked');
             localStorage.setItem(cb.id, cb.classList.contains('checked'));
@@ -266,26 +305,26 @@
       });
     }
 
-    // 부 접힘/펼침 초기화 및 저장
+    // 부 접힘/펼침
     function initToggles() {
-      ['alt1','alt2','alt3'].forEach(id=>{
+      ['alt1','alt2','alt3'].forEach(id => {
         const sec = document.getElementById(id),
               ct = sec.querySelector('.section-content'),
-              btn= sec.querySelector('.toggle-btn'),
+              btn = sec.querySelector('.toggle-btn'),
               key = 'collapsed_'+id;
         let col = localStorage.getItem(key);
         col = col === null ? true : (col === 'true');
         ct.classList.toggle('collapsed', col);
         btn.textContent = col ? '▶' : '▼';
-        btn.addEventListener('click', ()=>{
-          const nowCollapsed = !ct.classList.toggle('collapsed');
-          btn.textContent = nowCollapsed ? '▶' : '▼';
-          localStorage.setItem(key, nowCollapsed);
+        btn.addEventListener('click', () => {
+          const now = !ct.classList.toggle('collapsed');
+          btn.textContent = now ? '▶' : '▼';
+          localStorage.setItem(key, now);
         });
       });
     }
 
-    window.addEventListener('load', ()=>{
+    window.addEventListener('load', () => {
       resetDaily();
       resetWeekly();
       restoreAndBind();
