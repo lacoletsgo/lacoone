@@ -1,191 +1,483 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>도전 체크리스트</title>
   <style>
-    /* Pretendard 웹폰트 적용 */
-    @import url('https://cdn.jsdelivr.net/npm/pretendard/dist/web/variable/pretendardvariable.css');
-    body {
-      font-family: 'Pretendard Variable', 'Pretendard', system-ui, sans-serif;
-      background: #f9f9f9;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 30px;
-      font-weight: 600;
-    }
+    /* Pretendard 폰트 */
+    @import url('https://cdn.jsdelivr.net/npm/pretendard@1.3.6/dist/web/variable/pretendardvariable.css');
+    body { font-family: 'Pretendard Variable', sans-serif; padding: 20px; }
+
+    h1 { text-align: center; margin-bottom: 30px; }
     .section {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      overflow: hidden;
       margin: 0 auto 20px;
       max-width: 800px;
-      overflow: hidden;
     }
+    .section.main  { background-color: #fff5f5; }
+    .section.alt1  { background-color: #f5fff5; }
+    .section.alt2  { background-color: #f5f5ff; }
+    .section.alt3  { background-color: #fffaf0; }
+
     .section h2 {
-      margin: 0;
-      padding: 14px 16px;
-      background: #ede7d8;
-      font-size: 1.25em;
-      display: flex;
-      align-items: center;
-      color: #333;
-      font-weight: 600;
+      margin: 0; padding: 10px;
+      font-size: 1.2em;
+      display: flex; align-items: center;
+      background: rgba(0,0,0,0.05);
     }
     .toggle-btn {
       margin-left: auto;
-      border: none;
-      background: transparent;
-      font-size: 1.2em;
-      cursor: pointer;
+      background: none; border: none;
+      font-size: 1.2em; cursor: pointer;
     }
-    .section-content { padding: 10px 0; }
     .section-content.collapsed { display: none; }
+
     .subsection h3 {
-      margin: 0;
-      padding: 10px 16px;
-      background: #f7f2e7;
-      font-size: 1.1em;
-      color: #555;
-      font-weight: 600;
+      margin: 0; padding: 6px;
+      background: #fde9c3; font-size: 1em;
     }
     .subsection.weekly h3 {
-      background: #fde4c4;
+      background: #ffdab9;
     }
     table {
-      width: 100%;
-      border-collapse: collapse;
+      width: 100%; border-collapse: collapse;
+      margin: 10px 0;
     }
-    th, td {
-      padding: 10px 12px;
-      border-bottom: 1px solid #e0e0e0;
-      text-align: center;
+    tr:nth-child(even) { background: rgba(0,0,0,0.02); }
+    td, th {
+      border: 1px solid #ccc;
+      padding: 8px; text-align: center;
       white-space: nowrap;
-      font-size: 0.95em;
-      color: #444;
     }
-    tbody tr:nth-child(even) { background: #fbfbfb; }
+
     .checkbox {
       display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 1px solid #aaa;
-      border-radius: 4px;
-      margin-right: 8px;
-      vertical-align: middle;
-      cursor: pointer;
-      transition: background 0.2s;
+      width: 18px; height: 18px;
+      border: 1px solid #555;
+      margin: 0 4px; vertical-align: middle;
+      cursor: pointer; background: #fff;
+      transition: background .2s;
     }
-    .checkbox.checked { background: #ccc; }
-    label { cursor: pointer; }
+    .checkbox.checked { background: #e0e0e0; }
   </style>
 </head>
 <body>
   <h1>도전 체크리스트</h1>
 
-  <!-- 섹션 템플릿 정의 -->
-  <script>
-    const template = `
+  <!-- 본 섹션 -->
+  <div class="section main" id="main-section">
+    <h2>본</h2>
+    <div class="section-content">
+      <!-- 일일 -->
       <div class="subsection daily">
         <h3>일일도전</h3>
-        <table><tbody>
-          <tr><td>무료 패션 리롤</td><td><span class="checkbox" id="{prefix}_freeFashion" data-frequency="daily"></span></td></tr>
-          <tr><td>검은 구멍</td><td><span class="checkbox" id="{prefix}_blackHole1" data-frequency="daily"></span><span class="checkbox" id="{prefix}_blackHole2" data-frequency="daily"></span><span class="checkbox" id="{prefix}_blackHole3" data-frequency="daily"></span></td></tr>
-          <tr><td>결계</td><td><span class="checkbox" id="{prefix}_barrier1" data-frequency="daily"></span><span class="checkbox" id="{prefix}_barrier2" data-frequency="daily"></span></td></tr>
-          <tr><td>요일 던전</td><td><span class="checkbox" id="{prefix}_dayDungeon" data-frequency="daily"></span></td></tr>
-        </tbody></table>
+        <table>
+          <tr>
+            <td>무료 패션 리롤</td>
+            <td>
+              <span class="checkbox"
+                    id="main_freeFashion"
+                    data-frequency="daily"
+                    data-group="freeFashion"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>검은 구멍</td>
+            <td><span class="checkbox" id="main_blackHole_1" data-frequency="daily"></span></td>
+            <td><span class="checkbox" id="main_blackHole_2" data-frequency="daily"></span></td>
+            <td><span class="checkbox" id="main_blackHole_3" data-frequency="daily"></span></td>
+          </tr>
+          <tr>
+            <td>결계</td>
+            <td><span class="checkbox" id="main_barrier_1" data-frequency="daily"></span></td>
+            <td><span class="checkbox" id="main_barrier_2" data-frequency="daily"></span></td>
+          </tr>
+          <tr>
+            <td>요일 던전</td>
+            <td><span class="checkbox" id="main_dayDungeon_1" data-frequency="daily"></span></td>
+          </tr>
+        </table>
+      </div>
+      <!-- 주간 -->
+      <div class="subsection weekly">
+        <h3>주간도전</h3>
+        <table>
+          <tr>
+            <td>멤버쉽 골드알바</td>
+            <td>
+              <span class="checkbox" id="main_goldAlba" data-frequency="weekly"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>필보</td>
+            <td>
+              <label><span class="checkbox" id="main_filbo_ferry" data-frequency="weekly"></span>페리</label>
+              <label><span class="checkbox" id="main_filbo_kravbakh" data-frequency="weekly"></span>크라브바흐</label>
+              <label><span class="checkbox" id="main_filbo_krama" data-frequency="weekly"></span>크라마</label>
+            </td>
+          </tr>
+          <tr>
+            <td>마물퇴치징표</td>
+            <td>
+              <label>
+                <span class="checkbox"
+                      id="main_monsterRune"
+                      data-frequency="weekly"
+                      data-group="monsterRune"></span>룬의 파편
+              </label>
+              <label>
+                <span class="checkbox"
+                      id="main_monsterCatalyst"
+                      data-frequency="weekly"
+                      data-group="monsterCatalyst"></span>강화 재연소 촉매
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>어비스</td>
+            <td>
+              <label><span class="checkbox" id="main_abyss_relic" data-frequency="weekly"></span>유적</label>
+              <label><span class="checkbox" id="main_abyss_altar" data-frequency="weekly"></span>제단</label>
+              <label><span class="checkbox" id="main_abyss_hall" data-frequency="weekly"></span>전당</label>
+            </td>
+          </tr>
+          <tr>
+            <td>레이드</td>
+            <td>
+              <label><span class="checkbox" id="main_raid_beginner" data-frequency="weekly"></span>입문</label>
+              <label><span class="checkbox" id="main_raid_hell" data-frequency="weekly"></span>지옥</label>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 부1 섹션 -->
+  <div class="section alt1" id="alt1-section">
+    <h2>
+      부 1
+      <button class="toggle-btn">▼</button>
+    </h2>
+    <div class="section-content">
+      <div class="subsection daily">
+        <h3>일일도전</h3>
+        <table>
+          <tr>
+            <td>무료 패션 리롤</td>
+            <td>
+              <span class="checkbox"
+                    id="alt1_freeFashion"
+                    data-frequency="daily"
+                    data-group="freeFashion"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>검은 구멍</td>
+            <td><span class="checkbox" id="alt1_blackHole_1" data-frequency="daily"></span></td>
+            <td><span class="checkbox" id="alt1_blackHole_2" data-frequency="daily"></span></td>
+            <td><span class="checkbox" id="alt1_blackHole_3" data-frequency="daily"></span></td>
+          </tr>
+          <tr>
+            <td>결계</td>
+            <td><span class="checkbox" id="alt1_barrier_1" data-frequency="daily"></span></td>
+            <td><span class="checkbox" id="alt1_barrier_2" data-frequency="daily"></span></td>
+          </tr>
+          <tr>
+            <td>요일 던전</td>
+            <td><span class="checkbox" id="alt1_dayDungeon_1" data-frequency="daily"></span></td>
+          </tr>
+        </table>
       </div>
       <div class="subsection weekly">
-        <h3>주간 도전</h3>
-        <table><tbody>
-          <tr><td>멤버쉽 골드알바</td><td><span class="checkbox" id="{prefix}_goldAlba" data-frequency="weekly"></span></td></tr>
-          <tr><td>필보</td><td>
-            <label><span class="checkbox" id="{prefix}_filbo_ferry" data-frequency="weekly"></span>페리</label>
-            <label><span class="checkbox" id="{prefix}_filbo_kravbakh" data-frequency="weekly"></span>크라브바흐</label>
-            <label><span class="checkbox" id="{prefix}_filbo_krama" data-frequency="weekly"></span>크라마</label>
-          </td></tr>
-          <tr><td>마물퇴치징표</td><td>
-            <label><span class="checkbox" id="{prefix}_runeShard" data-frequency="weekly"></span>룬의 파편</label>
-            <label><span class="checkbox" id="{prefix}_reheatCatalyst" data-frequency="weekly"></span>강화 재연소 촉매</label>
-          </td></tr>
-          <tr><td>어비스</td><td>
-            <label><span class="checkbox" id="{prefix}_abyssRuins" data-frequency="weekly"></span>유적</label>
-            <label><span class="checkbox" id="{prefix}_abyssAltar" data-frequency="weekly"></span>제단</label>
-            <label><span class="checkbox" id="{prefix}_abyssHall" data-frequency="weekly"></span>전당</label>
-          </td></tr>
-          <tr><td>레이드</td><td>
-            <label><span class="checkbox" id="{prefix}_raidEntry" data-frequency="weekly"></span>입문</label>
-            <label><span class="checkbox" id="{prefix}_raidHell" data-frequency="weekly"></span>지옥</label>
-          </td></tr>
-        </tbody></table>
+        <h3>주간도전</h3>
+        <table>
+          <tr>
+            <td>멤버쉽 골드알바</td>
+            <td><span class="checkbox" id="alt1_goldAlba" data-frequency="weekly"></span></td>
+          </tr>
+          <tr>
+            <td>필보</td>
+            <td>
+              <label><span class="checkbox" id="alt1_filbo_ferry" data-frequency="weekly"></span>페리</label>
+              <label><span class="checkbox" id="alt1_filbo_kravbakh" data-frequency="weekly"></span>크라브바흐</label>
+              <label><span class="checkbox" id="alt1_filbo_krama" data-frequency="weekly"></span>크라마</label>
+            </td>
+          </tr>
+          <tr>
+            <td>마물퇴치징표</td>
+            <td>
+              <label>
+                <span class="checkbox"
+                      id="alt1_monsterRune"
+                      data-frequency="weekly"
+                      data-group="monsterRune"></span>룬의 파편
+              </label>
+              <label>
+                <span class="checkbox"
+                      id="alt1_monsterCatalyst"
+                      data-frequency="weekly"
+                      data-group="monsterCatalyst"></span>강화 재연소 촉매
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>어비스</td>
+            <td>
+              <label><span class="checkbox" id="alt1_abyss_relic" data-frequency="weekly"></span>유적</label>
+              <label><span class="checkbox" id="alt1_abyss_altar" data-frequency="weekly"></span>제단</label>
+              <label><span class="checkbox" id="alt1_abyss_hall" data-frequency="weekly"></span>전당</label>
+            </td>
+          </tr>
+          <tr>
+            <td>레이드</td>
+            <td>
+              <label><span class="checkbox" id="alt1_raid_beginner" data-frequency="weekly"></span>입문</label>
+              <label><span class="checkbox" id="alt1_raid_hell" data-frequency="weekly"></span>지옥</label>
+            </td>
+          </tr>
+        </table>
       </div>
-    `;
-  </script>
-
-  <!-- 본 섹션 -->
-  <div class="section" id="main">
-    <h2>본</h2>
-    <div class="section-content" id="main-content"></div>
+    </div>
   </div>
 
-  <!-- 부 섹션 1, 2, 3 -->
-  <div class="section" id="alt1">
-    <h2>부 1 <button class="toggle-btn" data-target="alt1-content">▼</button></h2>
-    <div class="section-content" id="alt1-content"></div>
+  <!-- 부2 섹션 -->
+  <div class="section alt2" id="alt2-section">
+    <h2>
+      부 2
+      <button class="toggle-btn">▼</button>
+    </h2>
+    <div class="section-content">
+      <div class="subsection daily">
+        <h3>일일도전</h3>
+        <table>
+          <tr>
+            <td>무료 패션 리롤</td>
+            <td>
+              <span class="checkbox"
+                    id="alt2_freeFashion"
+                    data-frequency="daily"
+                    data-group="freeFashion"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>검은 구멍</td>
+            <td><span class="checkbox" id="alt2_blackHole_1" data-frequency="daily"></span></td>
+            <td><span class="checkbox" id="alt2_blackHole_2" data-frequency="daily"></span></td>
+            <td><span class="checkbox" id="alt2_blackHole_3" data-frequency="daily"></span></td>
+          </tr>
+          <tr>
+            <td>결계</td>
+            <td><span class="checkbox" id="alt2_barrier_1" data-frequency="daily"></span></td>
+            <td><span class="checkbox" id="alt2_barrier_2" data-frequency="daily"></span></td>
+          </tr>
+          <tr>
+            <td>요일 던전</td>
+            <td><span class="checkbox" id="alt2_dayDungeon_1" data-frequency="daily"></span></td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection weekly">
+        <h3>주간도전</h3>
+        <table>
+          <tr>
+            <td>멤버쉽 골드알바</td>
+            <td><span class="checkbox" id="alt2_goldAlba" data-frequency="weekly"></span></td>
+          </tr>
+          <tr>
+            <td>필보</td>
+            <td>
+              <label><span class="checkbox" id="alt2_filbo_ferry" data-frequency="weekly"></span>페리</label>
+              <label><span class="checkbox" id="alt2_filbo_kravbakh" data-frequency="weekly"></span>크라브바흐</label>
+              <label><span class="checkbox" id="alt2_filbo_krama" data-frequency="weekly"></span>크라마</label>
+            </td>
+          </tr>
+          <tr>
+            <td>마물퇴치징표</td>
+            <td>
+              <label>
+                <span class="checkbox"
+                      id="alt2_monsterRune"
+                      data-frequency="weekly"
+                      data-group="monsterRune"></span>룬의 파편
+              </label>
+              <label>
+                <span class="checkbox"
+                      id="alt2_monsterCatalyst"
+                      data-frequency="weekly"
+                      data-group="monsterCatalyst"></span>강화 재연소 촉매
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>어비스</td>
+            <td>
+              <label><span class="checkbox" id="alt2_abyss_relic" data-frequency="weekly"></span>유적</label>
+              <label><span class="checkbox" id="alt2_abyss_altar" data-frequency="weekly"></span>제단</label>
+              <label><span class="checkbox" id="alt2_abyss_hall" data-frequency="weekly"></span>전당</label>
+            </td>
+          </tr>
+          <tr>
+            <td>레이드</td>
+            <td>
+              <label><span class="checkbox" id="alt2_raid_beginner" data-frequency="weekly"></span>입문</label>
+              <label><span class="checkbox" id="alt2_raid_hell" data-frequency="weekly"></span>지옥</label>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
-  <div class="section" id="alt2">
-    <h2>부 2 <button class="toggle-btn" data-target="alt2-content">▼</button></h2>
-    <div class="section-content" id="alt2-content"></div>
-  </div>
-  <div class="section" id="alt3">
-    <h2>부 3 <button class="toggle-btn" data-target="alt3-content">▼</button></h2>
-    <div class="section-content" id="alt3-content"></div>
+
+  <!-- 부3 섹션 -->
+  <div class="section alt3" id="alt3-section">
+    <h2>
+      부 3
+      <button class="toggle-btn">▼</button>
+    </h2>
+    <div class="section-content">
+      <div class="subsection daily">
+        <h3>일일도전</h3>
+        <table>
+          <tr>
+            <td>무료 패션 리롤</td>
+            <td>
+              <span class="checkbox"
+                    id="alt3_freeFashion"
+                    data-frequency="daily"
+                    data-group="freeFashion"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>검은 구멍</td>
+            <td><span class="checkbox" id="alt3_blackHole_1" data-frequency="daily"></span></td>
+            <td><span class="checkbox" id="alt3_blackHole_2" data-frequency="daily"></span></td>
+            <td><span class="checkbox" id="alt3_blackHole_3" data-frequency="daily"></span></td>
+          </tr>
+          <tr>
+            <td>결계</td>
+            <td><span class="checkbox" id="alt3_barrier_1" data-frequency="daily"></span></td>
+            <td><span class="checkbox" id="alt3_barrier_2" data-frequency="daily"></span></td>
+          </tr>
+          <tr>
+            <td>요일 던전</td>
+            <td><span class="checkbox" id="alt3_dayDungeon_1" data-frequency="daily"></span></td>
+          </tr>
+        </table>
+      </div>
+      <div class="subsection weekly">
+        <h3>주간도전</h3>
+        <table>
+          <tr>
+            <td>멤버쉽 골드알바</td>
+            <td><span class="checkbox" id="alt3_goldAlba" data-frequency="weekly"></span></td>
+          </tr>
+          <tr>
+            <td>필보</td>
+            <td>
+              <label><span class="checkbox" id="alt3_filbo_ferry" data-frequency="weekly"></span>페리</label>
+              <label><span class="checkbox" id="alt3_filbo_kravbakh" data-frequency="weekly"></span>크라브바흐</label>
+              <label><span class="checkbox" id="alt3_filbo_krama" data-frequency="weekly"></span>크라마</label>
+            </td>
+          </tr>
+          <tr>
+            <td>마물퇴치징표</td>
+            <td>
+              <label>
+                <span class="checkbox"
+                      id="alt3_monsterRune"
+                      data-frequency="weekly"
+                      data-group="monsterRune"></span>룬의 파편
+              </label>
+              <label>
+                <span class="checkbox"
+                      id="alt3_monsterCatalyst"
+                      data-frequency="weekly"
+                      data-group="monsterCatalyst"></span>강화 재연소 촉매
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>어비스</td>
+            <td>
+              <label><span class="checkbox" id="alt3_abyss_relic" data-frequency="weekly"></span>유적</label>
+              <label><span class="checkbox" id="alt3_abyss_altar" data-frequency="weekly"></span>제단</label>
+              <label><span class="checkbox" id="alt3_abyss_hall" data-frequency="weekly"></span>전당</label>
+            </td>
+          </tr>
+          <tr>
+            <td>레이드</td>
+            <td>
+              <label><span class="checkbox" id="alt3_raid_beginner" data-frequency="weekly"></span>입문</label>
+              <label><span class="checkbox" id="alt3_raid_hell" data-frequency="weekly"></span>지옥</label>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
 
   <script>
-    // 콘텐츠 렌더링
-    ['main','alt1','alt2','alt3'].forEach(id => {
-      document.getElementById(id+'-content').innerHTML = template.replace(/{prefix}/g, id);
-    });
-    // daily 초기화 및 체크리스트 상태 복원
+    // 1) 매일 06:00 기준 일일 초기화
     function getCycleDate() {
-      const now = new Date(); if (now.getHours() < 6) now.setDate(now.getDate() - 1);
+      const now = new Date();
+      if (now.getHours() < 6) now.setDate(now.getDate() - 1);
       return now.toISOString().slice(0,10);
     }
     function resetDaily() {
-      const last = localStorage.getItem('lastResetDate'), today = getCycleDate();
+      const last = localStorage.getItem('lastResetDate');
+      const today = getCycleDate();
       if (last !== today) {
-        document.querySelectorAll('.checkbox[data-frequency="daily"]').forEach(cb => localStorage.removeItem(cb.id));
+        document.querySelectorAll('.checkbox[data-frequency="daily"]').forEach(cb=>{
+          localStorage.removeItem(cb.id);
+          cb.classList.remove('checked');
+        });
         localStorage.setItem('lastResetDate', today);
       }
     }
+
+    // 2) 상태 복원
     function restore() {
-      document.querySelectorAll('.checkbox').forEach(cb => {
-        if (localStorage.getItem(cb.id) === 'true') cb.classList.add('checked');
+      document.querySelectorAll('.checkbox').forEach(cb=>{
+        if (localStorage.getItem(cb.id) === 'true') {
+          cb.classList.add('checked');
+        }
       });
     }
+
+    // 3) 체크박스 바인딩 (동기화 지원)
     function bindCheckboxes() {
-      document.querySelectorAll('.checkbox').forEach(cb => {
+      document.querySelectorAll('.checkbox').forEach(cb=>{
         cb.addEventListener('click', () => {
-          cb.classList.toggle('checked');
-          localStorage.setItem(cb.id, cb.classList.contains('checked'));
+          const group = cb.dataset.group;
+          if (group) {
+            const newState = !cb.classList.contains('checked');
+            document.querySelectorAll(`.checkbox[data-group="${group}"]`)
+              .forEach(other => {
+                other.classList.toggle('checked', newState);
+                localStorage.setItem(other.id, newState);
+              });
+          } else {
+            cb.classList.toggle('checked');
+            localStorage.setItem(cb.id, cb.classList.contains('checked'));
+          }
         });
       });
     }
-    // 접기/펼치기 기능
+
+    // 4) 부 접기/펼치기
     function bindToggles() {
-      document.querySelectorAll('.toggle-btn').forEach(btn => {
-        const target = document.getElementById(btn.dataset.target);
+      document.querySelectorAll('.toggle-btn').forEach(btn=>{
         btn.addEventListener('click', () => {
-          target.classList.toggle('collapsed');
-          btn.textContent = target.classList.contains('collapsed') ? '▶' : '▼';
+          const content = btn.closest('.section').querySelector('.section-content');
+          const collapsed = content.classList.toggle('collapsed');
+          btn.textContent = collapsed ? '▶' : '▼';
         });
       });
     }
+
     window.addEventListener('load', () => {
       resetDaily();
       restore();
