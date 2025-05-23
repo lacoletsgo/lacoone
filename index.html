@@ -2,13 +2,13 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>체크리스트</title>
+  <title>도전 체크리스트</title>
   <style>
     /* Pretendard 폰트 */
     @import url('https://cdn.jsdelivr.net/npm/pretendard@1.3.6/dist/web/variable/pretendardvariable.css');
     body { font-family: 'Pretendard Variable', sans-serif; padding: 20px; }
-
     h1 { text-align: center; margin-bottom: 30px; }
+
     .section {
       border: 1px solid #ddd;
       border-radius: 6px;
@@ -16,16 +16,16 @@
       margin: 0 auto 20px;
       max-width: 800px;
     }
-    .section.main  { background-color: #fff5f5; }
-    .section.alt1  { background-color: #f5fff5; }
-    .section.alt2  { background-color: #f5f5ff; }
-    .section.alt3  { background-color: #fffaf0; }
+    /* 헤더(h2)에만 색 지정 */
+    .section.main h2 { background-color: #ffdada; }
+    .section.alt1 h2 { background-color: #daffd8; }
+    .section.alt2 h2 { background-color: #dadaff; }
+    .section.alt3 h2 { background-color: #fffdda; }
 
     .section h2 {
       margin: 0; padding: 10px;
       font-size: 1.2em;
       display: flex; align-items: center;
-      background: rgba(0,0,0,0.05);
     }
     .toggle-btn {
       margin-left: auto;
@@ -41,6 +41,7 @@
     .subsection.weekly h3 {
       background: #ffdab9;
     }
+
     table {
       width: 100%; border-collapse: collapse;
       margin: 10px 0;
@@ -64,24 +65,18 @@
   </style>
 </head>
 <body>
-  <h1>체크리스트</h1>
+  <h1>도전 체크리스트</h1>
 
   <!-- 본 섹션 -->
   <div class="section main" id="main-section">
     <h2>본</h2>
     <div class="section-content">
-      <!-- 일일 -->
       <div class="subsection daily">
         <h3>일일도전</h3>
         <table>
           <tr>
             <td>무료 패션 리롤</td>
-            <td>
-              <span class="checkbox"
-                    id="main_freeFashion"
-                    data-frequency="daily"
-                    data-group="freeFashion"></span>
-            </td>
+            <td><span class="checkbox" id="main_freeFashion" data-frequency="daily" data-group="freeFashion"></span></td>
           </tr>
           <tr>
             <td>검은 구멍</td>
@@ -100,15 +95,12 @@
           </tr>
         </table>
       </div>
-      <!-- 주간 -->
       <div class="subsection weekly">
         <h3>주간도전</h3>
         <table>
           <tr>
             <td>멤버쉽 골드알바</td>
-            <td>
-              <span class="checkbox" id="main_goldAlba" data-frequency="weekly"></span>
-            </td>
+            <td><span class="checkbox" id="main_goldAlba" data-frequency="weekly"></span></td>
           </tr>
           <tr>
             <td>필보</td>
@@ -121,18 +113,8 @@
           <tr>
             <td>마물퇴치징표</td>
             <td>
-              <label>
-                <span class="checkbox"
-                      id="main_monsterRune"
-                      data-frequency="weekly"
-                      data-group="monsterRune"></span>룬의 파편
-              </label>
-              <label>
-                <span class="checkbox"
-                      id="main_monsterCatalyst"
-                      data-frequency="weekly"
-                      data-group="monsterCatalyst"></span>강화 재연소 촉매
-              </label>
+              <label><span class="checkbox" id="main_monsterRune" data-frequency="weekly" data-group="monsterRune"></span>룬의 파편</label>
+              <label><span class="checkbox" id="main_monsterCatalyst" data-frequency="weekly" data-group="monsterCatalyst"></span>강화 재연소 촉매</label>
             </td>
           </tr>
           <tr>
@@ -157,22 +139,15 @@
 
   <!-- 부1 섹션 -->
   <div class="section alt1" id="alt1-section">
-    <h2>
-      부 1
-      <button class="toggle-btn">▼</button>
-    </h2>
+    <h2>부 1 <button class="toggle-btn">▼</button></h2>
     <div class="section-content">
+      <!-- 본과 동일한 내용 -->
       <div class="subsection daily">
         <h3>일일도전</h3>
         <table>
           <tr>
             <td>무료 패션 리롤</td>
-            <td>
-              <span class="checkbox"
-                    id="alt1_freeFashion"
-                    data-frequency="daily"
-                    data-group="freeFashion"></span>
-            </td>
+            <td><span class="checkbox" id="alt1_freeFashion" data-frequency="daily" data-group="freeFashion"></span></td>
           </tr>
           <tr>
             <td>검은 구멍</td>
@@ -209,18 +184,8 @@
           <tr>
             <td>마물퇴치징표</td>
             <td>
-              <label>
-                <span class="checkbox"
-                      id="alt1_monsterRune"
-                      data-frequency="weekly"
-                      data-group="monsterRune"></span>룬의 파편
-              </label>
-              <label>
-                <span class="checkbox"
-                      id="alt1_monsterCatalyst"
-                      data-frequency="weekly"
-                      data-group="monsterCatalyst"></span>강화 재연소 촉매
-              </label>
+              <label><span class="checkbox" id="alt1_monsterRune" data-frequency="weekly" data-group="monsterRune"></span>룬의 파편</label>
+              <label><span class="checkbox" id="alt1_monsterCatalyst" data-frequency="weekly" data-group="monsterCatalyst"></span>강화 재연소 촉매</label>
             </td>
           </tr>
           <tr>
@@ -245,22 +210,15 @@
 
   <!-- 부2 섹션 -->
   <div class="section alt2" id="alt2-section">
-    <h2>
-      부 2
-      <button class="toggle-btn">▼</button>
-    </h2>
+    <h2>부 2 <button class="toggle-btn">▼</button></h2>
     <div class="section-content">
+      <!-- 동일하게 복사 -->
       <div class="subsection daily">
         <h3>일일도전</h3>
         <table>
           <tr>
             <td>무료 패션 리롤</td>
-            <td>
-              <span class="checkbox"
-                    id="alt2_freeFashion"
-                    data-frequency="daily"
-                    data-group="freeFashion"></span>
-            </td>
+            <td><span class="checkbox" id="alt2_freeFashion" data-frequency="daily" data-group="freeFashion"></span></td>
           </tr>
           <tr>
             <td>검은 구멍</td>
@@ -297,18 +255,8 @@
           <tr>
             <td>마물퇴치징표</td>
             <td>
-              <label>
-                <span class="checkbox"
-                      id="alt2_monsterRune"
-                      data-frequency="weekly"
-                      data-group="monsterRune"></span>룬의 파편
-              </label>
-              <label>
-                <span class="checkbox"
-                      id="alt2_monsterCatalyst"
-                      data-frequency="weekly"
-                      data-group="monsterCatalyst"></span>강화 재연소 촉매
-              </label>
+              <label><span class="checkbox" id="alt2_monsterRune" data-frequency="weekly" data-group="monsterRune"></span>룬의 파편</label>
+              <label><span class="checkbox" id="alt2_monsterCatalyst" data-frequency="weekly" data-group="monsterCatalyst"></span>강화 재연소 촉매</label>
             </td>
           </tr>
           <tr>
@@ -333,22 +281,15 @@
 
   <!-- 부3 섹션 -->
   <div class="section alt3" id="alt3-section">
-    <h2>
-      부 3
-      <button class="toggle-btn">▼</button>
-    </h2>
+    <h2>부 3 <button class="toggle-btn">▼</button></h2>
     <div class="section-content">
+      <!-- 동일하게 복사 -->
       <div class="subsection daily">
         <h3>일일도전</h3>
         <table>
           <tr>
             <td>무료 패션 리롤</td>
-            <td>
-              <span class="checkbox"
-                    id="alt3_freeFashion"
-                    data-frequency="daily"
-                    data-group="freeFashion"></span>
-            </td>
+            <td><span class="checkbox" id="alt3_freeFashion" data-frequency="daily" data-group="freeFashion"></span></td>
           </tr>
           <tr>
             <td>검은 구멍</td>
@@ -385,18 +326,8 @@
           <tr>
             <td>마물퇴치징표</td>
             <td>
-              <label>
-                <span class="checkbox"
-                      id="alt3_monsterRune"
-                      data-frequency="weekly"
-                      data-group="monsterRune"></span>룬의 파편
-              </label>
-              <label>
-                <span class="checkbox"
-                      id="alt3_monsterCatalyst"
-                      data-frequency="weekly"
-                      data-group="monsterCatalyst"></span>강화 재연소 촉매
-              </label>
+              <label><span class="checkbox" id="alt3_monsterRune" data-frequency="weekly" data-group="monsterRune"></span>룬의 파편</label>
+              <label><span class="checkbox" id="alt3_monsterCatalyst" data-frequency="weekly" data-group="monsterCatalyst"></span>강화 재연소 촉매</label>
             </td>
           </tr>
           <tr>
@@ -420,7 +351,7 @@
   </div>
 
   <script>
-    // 1) 매일 06:00 기준 일일 초기화
+    // 매일 06:00 기준 일일 초기화
     function getCycleDate() {
       const now = new Date();
       if (now.getHours() < 6) now.setDate(now.getDate() - 1);
@@ -437,8 +368,6 @@
         localStorage.setItem('lastResetDate', today);
       }
     }
-
-    // 2) 상태 복원
     function restore() {
       document.querySelectorAll('.checkbox').forEach(cb=>{
         if (localStorage.getItem(cb.id) === 'true') {
@@ -446,8 +375,6 @@
         }
       });
     }
-
-    // 3) 체크박스 바인딩 (동기화 지원)
     function bindCheckboxes() {
       document.querySelectorAll('.checkbox').forEach(cb=>{
         cb.addEventListener('click', () => {
@@ -466,8 +393,6 @@
         });
       });
     }
-
-    // 4) 부 접기/펼치기
     function bindToggles() {
       document.querySelectorAll('.toggle-btn').forEach(btn=>{
         btn.addEventListener('click', () => {
@@ -477,7 +402,6 @@
         });
       });
     }
-
     window.addEventListener('load', () => {
       resetDaily();
       restore();
