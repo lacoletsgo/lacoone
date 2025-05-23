@@ -1,192 +1,73 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>체크리스트</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <title>Daily Checklist</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-100 text-gray-800 p-6">
-  <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow">
-    <h1 class="text-2xl font-bold mb-4 text-center">체크리스트</h1>
-    <table class="w-full table-auto border-collapse">
-      <thead>
-        <tr class="bg-gray-200">
-          <th class="border px-4 py-2 text-center col-0">항목</th>
-          <th class="border px-4 py-2 text-center col-1">
-            <div class="flex items-center justify-center">
-              <input type="text" id="name-0" placeholder="본캐" class="w-full text-center"/>
-            </div>
-          </th>
-          <th class="border px-4 py-2 text-center col-2">
-            <div class="flex items-center justify-center">
-              <input type="text" id="name-1" placeholder="부캐1" class="w-full text-center"/>
-              <button data-col="2" class="ml-1 px-1 py-0.5 text-xs bg-gray-200 rounded toggle-col">–</button>
-            </div>
-          </th>
-          <th class="border px-4 py-2 text-center col-3">
-            <div class="flex items-center justify-center">
-              <input type="text" id="name-2" placeholder="부캐2" class="w-full text-center"/>
-              <button data-col="3" class="ml-1 px-1 py-0.5 text-xs bg-gray-200 rounded toggle-col">–</button>
-            </div>
-          </th>
-          <th class="border px-4 py-2 text-center col-4">
-            <div class="flex items-center justify-center">
-              <input type="text" id="name-3" placeholder="부캐3" class="w-full text-center"/>
-              <button data-col="4" class="ml-1 px-1 py-0.5 text-xs bg-gray-200 rounded toggle-col">–</button>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Daily challenge per char -->
-        <tr>
-          <td class="border px-4 py-2 col-0">일일 도전</td>
-          <td class="border px-4 py-2 text-center col-1"><input type="checkbox" id="daily-0"/></td>
-          <td class="border px-4 py-2 text-center col-2"><input type="checkbox" id="daily-1"/></td>
-          <td class="border px-4 py-2 text-center col-3"><input type="checkbox" id="daily-2"/></td>
-          <td class="border px-4 py-2 text-center col-4"><input type="checkbox" id="daily-3"/></td>
-        </tr>
-        <!-- Shared daily tasks -->
-        <tr>
-          <td class="border px-4 py-2 col-0">캐시샵 무료 리롤</td>
-          <td colspan="4" class="border px-4 py-2 text-center col-1 col-2 col-3 col-4">
-            <input type="checkbox" id="cashshop" class="mr-2"/>
-          </td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2 col-0">검은 구멍</td>
-          <td colspan="4" class="border px-4 py-2 text-center col-1 col-2 col-3 col-4">
-            <input type="checkbox" id="blackhole" class="mr-2"/>
-          </td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2 col-0">결계</td>
-          <td class="border px-4 py-2 col-1"></td>
-          <td class="border px-4 py-2 text-center col-2"><input type="checkbox" id="barrier-0"/></td>
-          <td class="border px-4 py-2 text-center col-3"><input type="checkbox" id="barrier-1"/></td>
-          <td class="border px-4 py-2 col-4"></td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2 col-0">요일 던전</td>
-          <td colspan="4" class="border px-4 py-2 text-center col-1 col-2 col-3 col-4">
-            <input type="checkbox" id="dayDungeon" class="mr-2"/><span id="dayInfo"></span>
-          </td>
-        </tr>
-        <!-- Weekly tasks group header -->
-        <tr class="bg-gray-200">
-          <td class="border px-4 py-2 font-bold col-0">주간 도전</td>
-          <td class="border px-4 py-2 col-1"></td>
-          <td class="border px-4 py-2 col-2"></td>
-          <td class="border px-4 py-2 col-3"></td>
-          <td class="border px-4 py-2 col-4"></td>
-        </tr>
-        <!-- Weekly tasks -->
-        <tr>
-          <td class="border px-4 py-2 col-0">멤버쉽 아르바이트(골드)</td>
-          <td colspan="4" class="border px-4 py-2 col-1 col-2 col-3 col-4 text-center"><input type="checkbox" id="membership"/></td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2 col-0">필드보스 페리</td>
-          <td colspan="4" class="border px-4 py-2 col-1 col-2 col-3 col-4 text-center"><input type="checkbox" id="peri"/></td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2 col-0">필드보스 크라브바흐</td>
-          <td colspan="4" class="border px-4 py-2 col-1 col-2 col-3 col-4 text-center"><input type="checkbox" id="krav"/></td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2 col-0">필드보스 크라마</td>
-          <td colspan="4" class="border px-4 py-2 col-1 col-2 col-3 col-4 text-center"><input type="checkbox" id="krama"/></td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2 col-0">증표/파편/촉매</td>
-          <td colspan="4" class="border px-4 py-2 col-1 col-2 col-3 col-4 text-center"><input type="checkbox" id="sharedItems"/></td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2 col-0">어비스 유적</td>
-          <td colspan="4" class="border px-4 py-2 col-1 col-2 col-3 col-4 text-center"><input type="checkbox" id="abyss"/></td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2 col-0">제단</td>
-          <td colspan="4" class="border px-4 py-2 col-1 col-2 col-3 col-4 text-center"><input type="checkbox" id="altar"/></td>
-        </tr>
-        <tr>
-          <td class="border px-4 py-2 col-0">전당</td>
-          <td colspan="4" class="border px-4 py-2 col-1 col-2 col-3 col-4 text-center"><input type="checkbox" id="hall"/></td>
-        </tr>
-        <!-- Raid radio -->
-        <tr>
-          <td class="border px-4 py-2 col-0">글라리 레이드</td>
-          <td colspan="4" class="border px-4 py-2 col-1 col-2 col-3 col-4 text-center">
-            <label class="mr-4"><input type="radio" name="raid" value="입문"/> 입문</label>
-            <label><input type="radio" name="raid" value="지옥"/> 지옥</label>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<body>
+  <h1>매일 일일 도전 체크리스트</h1>
 
-  <script>
-    // Column toggle
-    document.querySelectorAll('.toggle-col').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        const col = btn.getAttribute('data-col');
-        document.querySelectorAll('.col-'+col).forEach(cell=> cell.classList.toggle('hidden'));
-      });
-    });
+  <section class="section">
+    <h2>본 • 일일 도전</h2>
+    <ul>
+      <li>
+        <label>
+          <input type="checkbox" id="daily-fashion" />
+          <span>무료 패션 리롤</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" id="daily-hole" />
+          <span>검은 구멍</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" id="daily-barrier" />
+          <span>결계</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" id="daily-dungeon" />
+          <span>요일 던전</span>
+        </label>
+      </li>
+    </ul>
+  </section>
 
-    // Character name inputs
-    const nameIds = ["name-0","name-1","name-2","name-3"];
-    const defaultNames = ["본캐","부캐1","부캐2","부캐3"];
-    let names = JSON.parse(localStorage.getItem("names")||"[]");
-    if(names.length!==4) names = [...defaultNames];
-    nameIds.forEach((id,i)=>{
-      const input=document.getElementById(id);
-      input.value=names[i];
-      input.addEventListener('input',()=>{
-        names[i]=input.value||defaultNames[i];
-        localStorage.setItem('names',JSON.stringify(names));
-      });
-    });
+  <section class="section">
+    <h2>부 • 일일 도전</h2>
+    <ul>
+      <li>
+        <label>
+          <input type="checkbox" id="daily-fashion-2" />
+          <span>무료 패션 리롤</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" id="daily-hole-2" />
+          <span>검은 구멍</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" id="daily-barrier-2" />
+          <span>결계</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" id="daily-dungeon-2" />
+          <span>요일 던전</span>
+        </label>
+      </li>
+    </ul>
+  </section>
 
-    // Dungeon day info
-    const dayNames=["일","월","화","수","목","금","토"];
-    const dungeonMap={0:"원하는 던전",1:"골드",2:"보석",3:"촉매",4:"골드",5:"보석",6:"촉매"};
-    document.getElementById('dayInfo').innerText = `${dayNames[new Date().getDay()]}요일: ${dungeonMap[new Date().getDay()]}`;
-
-    // Tasks
-    const dailyIds=["daily-0","daily-1","daily-2","daily-3","cashshop","blackhole","barrier-0","barrier-1","dayDungeon"];
-    const weeklyIds=["membership","peri","krav","krama","sharedItems","abyss","altar","hall"];
-    let data=JSON.parse(localStorage.getItem("checklist")||"{}");
-    const now=new Date();
-    // Reset daily
-    const dailyPoint=new Date(now.getFullYear(), now.getMonth(), now.getDate(),6);
-    const lastDaily=localStorage.getItem('lastDaily');
-    if(!lastDaily || (new Date(lastDaily)<dailyPoint && now>=dailyPoint)){
-      dailyIds.forEach(id=>data[id]=false);
-      localStorage.setItem('lastDaily',now.toISOString());
-    }
-    // Reset weekly
-    const weekDay=now.getDay(), diff=(weekDay+6)%7;
-    const mon=new Date(now); mon.setDate(now.getDate()-diff);
-    const weeklyPoint=new Date(mon.getFullYear(), mon.getMonth(), mon.getDate(),6);
-    const lastWeekly=localStorage.getItem('lastWeekly');
-    if(!lastWeekly || (new Date(lastWeekly)<weeklyPoint && now>=weeklyPoint)){
-      weeklyIds.forEach(id=>data[id]=false);
-      data['raid']=null;
-      localStorage.setItem('lastWeekly',now.toISOString());
-    }
-    // Apply saved
-    dailyIds.forEach(id=>{ const el=document.getElementById(id); if(el) el.checked=data[id]; });
-    weeklyIds.forEach(id=>{ const el=document.getElementById(id); if(el) el.checked=data[id]; });
-    document.getElementsByName('raid').forEach(r=> r.checked=data['raid']===r.value);
-    // Save
-    const save=()=> localStorage.setItem('checklist',JSON.stringify(data));
-    [...dailyIds, ...weeklyIds].forEach(id=>{
-      const el=document.getElementById(id);
-      if(el) el.addEventListener('change',()=>{ data[id]=el.checked; save(); });
-    });
-    document.getElementsByName('raid').forEach(r=> r.addEventListener('change',()=>{ data['raid']=r.value; save(); }));
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
